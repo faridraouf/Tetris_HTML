@@ -14,12 +14,16 @@ function draw() {
   circle(centerx,centery,bigd)
   fill(100)
   circle(centerx,centery,littled) 
+
+  
   numc = 18
   for (let i = 0 ; i <numc; i++){
     fill(50)
     circle(centerx + 85*cos(2*i* PI/numc) ,centery + 85*sin(2*i* PI/numc),(bigd-littled)/2)
-
-
+   }
+  if(mouseX <100 && mouseY < 100){
+    circle(mouseX,mouseY,20)
   }
-  
+
+
 }
