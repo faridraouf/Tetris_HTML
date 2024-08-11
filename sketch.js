@@ -14,10 +14,10 @@ function draw() {
   circle(centerx,centery,bigd)
   fill(100)
   circle(centerx,centery,littled) 
-  
-  for (let i = 0 ; i <4; i++){
+  numc = 18
+  for (let i = 0 ; i <numc; i++){
     fill(50)
-    circle(centerx + 85*cos(i* PI/2) ,centery + 85*sin(i*PI/2),(bigd-littled)/2)
+    circle(centerx + 85*cos(2*i* PI/numc) ,centery + 85*sin(2*i* PI/numc),(bigd-littled)/2)
 
 
   }
