@@ -1,11 +1,12 @@
 function setup() {
   let cnv = createCanvas(400, 400);
 
-  background(220);
+  
   cnv.position(100, 200);
 }
 
 function draw() {
+  background(220);
   centerx=200
   centery=200
   bigd = 200
@@ -16,14 +17,12 @@ function draw() {
   circle(centerx,centery,littled) 
 
   
-  numc = 18
-  for (let i = 0 ; i <numc; i++){
-    fill(50)
-    circle(centerx + 85*cos(2*i* PI/numc) ,centery + 85*sin(2*i* PI/numc),(bigd-littled)/2)
-   }
-  if(mouseX <100 && mouseY < 100){
-    circle(mouseX,mouseY,20)
-  }
+ if(Math.pow(mouseX-200,2) + Math.pow(mouseY-200,2)  > 10000 ){
+  circle(centerx + 85*cos(atan((mouseY-200)/(mouseX-200))),centery+ 85*sin(atan((mouseY-200)/(mouseX-200))),(bigd-littled)/2)
+ }
+
+    
+  
 
 
 }
