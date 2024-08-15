@@ -1,28 +1,38 @@
 function setup() {
-  let cnv = createCanvas(400, 400);
-
+  let cnv = createCanvas(600, 400);
   
   cnv.position(100, 200);
+  
+  oldx = 0
+  dydt = 0
+  y = oldx
 }
 
 function draw() {
   background(220);
-  centerx=200
-  centery=200
-  bigd = 200
-  littled = 140
-  fill(255)
-  circle(centerx,centery,bigd)
   fill(100)
-  circle(centerx,centery,littled) 
+  
+  f = 2
+  z = 0.5
+  r = 2
+  T = 0.01
+  k1 = z / (PI*f)
+  k2 = 1 / ((2*PI*f)*(2*PI*f))
+  k3 = r * z / (2*PI*f)
+
 
   
- if(Math.pow(mouseX-200,2) + Math.pow(mouseY-200,2)  > 10000 ){
-  circle(centerx + 85*cos(atan((mouseY-200)/(mouseX-200))),centery+ 85*sin(atan((mouseY-200)/(mouseX-200))),(bigd-littled)/2)
- }
-
-    
   
+  dxdt = (mouseX - oldx ) / T 
+  oldx = mouseX
+  
+  y = y + T*dydt
+  dydt = dydt + T*(mouseX + k3*dxdt - y - k1*dydt)/k2
+  oldx = mouseX
+  
+ circle(y,40,40) 
+  console.log(oldx)
+
+} 
 
 
-}
