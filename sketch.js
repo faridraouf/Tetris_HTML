@@ -11,9 +11,9 @@ function setup() {
   shapes = []
   newshape = 1
   count = -1
-//frameRate(1)
+  //frameRate(1)
   row_num = 0
-  
+
 
   grid = Array(rows).fill().map(() => Array(cols).fill(0));
 }
@@ -25,11 +25,11 @@ function draw() {
   for (let i = 0; i < 10; i++) {
     line((i * 30), 0, (i * 30), 600)
   }
-if(newshape == 1){
-  shapes.push(new L(2,2))
-  count  += 1
-newshape = 0
-}
+  if (newshape == 1) {
+    shapes.push(new L(2, 2))
+    count += 1
+    newshape = 0
+  }
 
   for (const element of shapes) {
     element.Show()
@@ -37,17 +37,26 @@ newshape = 0
       grid[block.y_pos][block.x_pos] = 1
     }
   }
-  
-if (frameCount % 20 == 0){
-  
+
+  if (frameCount % 20 == 0) {
+
     //shapes[count].MoveDown()
-}
+  }
   
-if(shapes[count].ReachedBottom()){
-  newshape  = 1
-}
+  
+  if (shapes[count].ReachedBottom()) {
+    
+    newshape = 1
+  }
+  
 
-
+  for (const block of shapes[count].lower_blocks){
+    if (newshape == 1){break;}
+    if (grid[block.y_pos+1][block.x_pos] == 1){
+      newshape = 1
+    }
+  }
+ 
 
 }
 
@@ -64,11 +73,11 @@ function keyPressed() {
       break;
     case RIGHT_ARROW:
 
-    shapes[count].MoveRight()
+      shapes[count].MoveRight()
       break;
     case 82:  // R letter
 
-    shapes[count].Rotate()
+      shapes[count].Rotate()
       break;
 
     case DOWN_ARROW:

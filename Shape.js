@@ -23,24 +23,28 @@ class Shape {
     this.y = []
     this.rotation_no = 0
     this.blocks = []
-    this.no_of_rotations = 4
-    
+    this.lower_blocks = []
+    this.no_of_rotations
+
+    this.lower_blocks_nos = []
   }
   Update(){
+    this.lower_blocks = []
     for (let i = 0 ; i < this.no_of_squares ; i++){
       this.blocks[i] = new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) )
+    }
+    for (let i = 0 ; i < this.lower_blocks_nos[this.rotation_no].length ; i++){
+      this.lower_blocks.push( this.blocks[this.lower_blocks_nos[this.rotation_no][i]])
     }
   }
   Show() {
     
-    for (let i = 0; i < this.no_of_squares; i++) {
+    for (const block of this.blocks){
 
-      var test = this.blocks[i]
-      test.Show()
-    
-      // Stop drawing the shape.
-      
+      block.Show()
     }
+      
+    
     
     circle(this.x_center* this.w  + this.w/2, this.y_center* this.w  + this.w/2, 10)
   }
@@ -97,11 +101,19 @@ class Shape {
   }
 
   ReachedBottom() {
+
+
+
+    
     for (const element of this.blocks) {
       if (element.y_pos == 19){
         return true ;
       }
+
     }
+    
+    
+
     return false;
   }
 
@@ -111,7 +123,8 @@ class L extends Shape {
   constructor(x_center, y_center) {
     super(x_center, y_center);
     this.no_of_squares = 4;
-    
+    this.no_of_rotations = 4;
+
     this.x = [
       [0,0,0,1],
       [-1,-1,0,1],
@@ -126,10 +139,20 @@ class L extends Shape {
       [0,0,0,-1]
     ]
 
+    this.lower_blocks_nos = [
+      [2,3],
+      [0,2,3],
+      [0,3],
+      [0,1,2]
+    ]
     
 
     for (let i = 0 ; i < this.no_of_squares ; i++){
-      this.blocks.push(new Block(this.x_center - (this.x[this.rotation_no][i]), this.y_center - (this.y[this.rotation_no][i] ) ))
+      this.blocks.push(new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) ))
+      
+    }
+    for (let i = 0 ; i < this.lower_blocks_nos[this.rotation_no].length ; i++){
+      this.lower_blocks.push(this.blocks[this.lower_blocks_nos[this.rotation_no][i]])
     }
 
   }
