@@ -100,7 +100,7 @@ class Shape {
     
   }
 
-  ReachedBottom() {
+  ReachedBottom(grid) {
 
 
 
@@ -110,6 +110,14 @@ class Shape {
         return true ;
       }
 
+    }
+
+
+    for (const block of this.lower_blocks){
+      
+      if (grid[block.y_pos+1][block.x_pos] == 1){
+        return true
+      }
     }
     
     
@@ -147,17 +155,48 @@ class L extends Shape {
     ]
     
 
-    for (let i = 0 ; i < this.no_of_squares ; i++){
-      this.blocks.push(new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) ))
+    // for (let i = 0 ; i < this.no_of_squares ; i++){
+    //   this.blocks.push(new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) ))
       
-    }
-    for (let i = 0 ; i < this.lower_blocks_nos[this.rotation_no].length ; i++){
-      this.lower_blocks.push(this.blocks[this.lower_blocks_nos[this.rotation_no][i]])
-    }
+    // }
+    // for (let i = 0 ; i < this.lower_blocks_nos[this.rotation_no].length ; i++){
+    //   this.lower_blocks.push(this.blocks[this.lower_blocks_nos[this.rotation_no][i]])
+    // }
 
   }
+}
 
-
+  class Tile extends Shape {
+    constructor(x_center, y_center) {
+      super(x_center, y_center);
+      this.no_of_squares = 4;
+      this.no_of_rotations = 1;
+  
+      this.x = [
+        [-0.5,0.5,-0.5,0.5]
+        
+      ]
+  
+      this.y = [
+        [-0.5,-0.5,0.5,0.5]
+        
+      ]
+  
+      this.lower_blocks_nos = [
+        [2,3]
+        
+      ]
+      
+  
+      for (let i = 0 ; i < this.no_of_squares ; i++){
+        this.blocks.push(new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) ))
+        
+      }
+      for (let i = 0 ; i < this.lower_blocks_nos[this.rotation_no].length ; i++){
+        this.lower_blocks.push(this.blocks[this.lower_blocks_nos[this.rotation_no][i]])
+      }
+  
+    }
 
   
 
