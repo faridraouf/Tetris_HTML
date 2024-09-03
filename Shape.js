@@ -1,12 +1,13 @@
 class Block{
-  constructor(x_pos,y_pos){
+  constructor(x_pos,y_pos,colour){
     this.w = 30;
     this.x_pos = x_pos;
     this.y_pos = y_pos;
+    this.colour = colour;
            
   }
   Show(){
-    fill(255,0,0)
+    fill(this.colour)
     square(this.x_pos*this.w,this.y_pos*this.w,this.w)
     fill(255)
 
@@ -15,9 +16,10 @@ class Block{
 
 class Shape {
   constructor(x_center, y_center) {
-    this.w = 30
+    
     this.x_center = x_center ;
     this.y_center = y_center ;
+    this.colour;
     this.no_of_squares
     this.x = []
     this.y = []
@@ -31,7 +33,7 @@ class Shape {
   Update(){
     this.lower_blocks = []
     for (let i = 0 ; i < this.no_of_squares ; i++){
-      this.blocks[i] = new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) )
+      this.blocks[i] = new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) , this.colour)
     }
     for (let i = 0 ; i < this.lower_blocks_nos[this.rotation_no].length ; i++){
       this.lower_blocks.push( this.blocks[this.lower_blocks_nos[this.rotation_no][i]])
@@ -46,7 +48,7 @@ class Shape {
       
     
     
-    circle(this.x_center* this.w  + this.w/2, this.y_center* this.w  + this.w/2, 10)
+    
   }
 
   MoveUp() {
@@ -132,7 +134,8 @@ class L extends Shape {
     super(x_center, y_center);
     this.no_of_squares = 4;
     this.no_of_rotations = 4;
-
+    this.rotation_no = 3;
+    this.colour = "DarkOrange"
     this.x = [
       [0,0,0,1],
       [-1,-1,0,1],
@@ -154,14 +157,76 @@ class L extends Shape {
       [0,1,2]
     ]
     
+    this.Update()
+    
 
-    // for (let i = 0 ; i < this.no_of_squares ; i++){
-    //   this.blocks.push(new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) ))
-      
-    // }
-    // for (let i = 0 ; i < this.lower_blocks_nos[this.rotation_no].length ; i++){
-    //   this.lower_blocks.push(this.blocks[this.lower_blocks_nos[this.rotation_no][i]])
-    // }
+  }
+}
+
+class Mirror_L extends Shape {
+  constructor(x_center, y_center) {
+    super(x_center, y_center);
+    this.no_of_squares = 4;
+    this.no_of_rotations = 4;
+    this.rotation_no = 3;
+    this.colour = "MediumBlue"
+    this.x = [
+      [0,0,0,-1],
+      [-1,-1,0,1],
+      [1,0,0,0],
+      [-1,0,1,1]
+    ]
+
+    this.y = [
+      [-1,0,1,1],
+      [-1,0,0,0],
+      [-1,-1,0,1],
+      [0,0,0,1]
+    ]
+
+    this.lower_blocks_nos = [
+      [2,3],
+      [1,2,3],
+      [0,3],
+      [0,1,3]
+    ]
+    
+    this.Update()
+    
+
+  }
+}
+
+class T extends Shape {
+  constructor(x_center, y_center) {
+    super(x_center, y_center);
+    this.no_of_squares = 4;
+    this.no_of_rotations = 4;
+    this.rotation_no = 2;
+    this.colour = "DarkViolet"   
+    this.x = [
+      [0,-1,0,1],
+      [1,0,0,0],
+      [0,-1,0,1],
+      [-1,0,0,0]
+    ]
+
+    this.y = [
+      [-1,0,0,0],
+      [0,-1,0,1],
+      [1,0,0,0],
+      [0,-1,0,1]
+    ]
+
+    this.lower_blocks_nos = [
+      [1,2,3],
+      [0,3],
+      [0,1,3],
+      [0,3]
+    ]
+    
+    this.Update()
+    
 
   }
 }
@@ -171,7 +236,7 @@ class L extends Shape {
       super(x_center, y_center);
       this.no_of_squares = 4;
       this.no_of_rotations = 1;
-  
+      this.colour = "Gold"
       this.x = [
         [-0.5,0.5,-0.5,0.5]
         
@@ -188,13 +253,7 @@ class L extends Shape {
       ]
       
   
-      for (let i = 0 ; i < this.no_of_squares ; i++){
-        this.blocks.push(new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) ))
-        
-      }
-      for (let i = 0 ; i < this.lower_blocks_nos[this.rotation_no].length ; i++){
-        this.lower_blocks.push(this.blocks[this.lower_blocks_nos[this.rotation_no][i]])
-      }
+      this.Update()
   
     }
 
@@ -202,4 +261,104 @@ class L extends Shape {
 
   
 
+}
+
+class Z extends Shape {
+  constructor(x_center, y_center) {
+    super(x_center, y_center);
+    this.no_of_squares = 4;
+    this.no_of_rotations = 4;
+    this.colour = "Red"
+    this.x = [
+      [-1,0,0,1],
+      [1,1,0,0],
+      [-1,0,0,1],
+      [0,0,-1,-1]
+    ]
+
+    this.y = [
+      [-1,-1,0,0],
+      [-1,0,0,1],
+      [0,0,1,1],
+      [-1,0,0,1]
+    ]
+
+    this.lower_blocks_nos = [
+      [0,2,3],
+      [1,3],
+      [0,2,3],
+      [1,3]
+    ]
+    
+    this.Update()
+    
+
+  }
+}
+
+class Mirror_Z extends Shape {
+  constructor(x_center, y_center) {
+    super(x_center, y_center);
+    this.no_of_squares = 4;
+    this.no_of_rotations = 4;
+    this.colour = "LimeGreen"
+    this.x = [
+      [-1,0,0,1],
+      [0,0,1,1],
+      [-1,0,0,1],
+      [-1,-1,0,0]
+    ]
+
+    this.y = [
+      [0,0,-1,-1],
+      [-1,0,0,1],
+      [1,1,0,0],
+      [-1,0,0,1]
+    ]
+
+    this.lower_blocks_nos = [
+      [0,1,3],
+      [1,3],
+      [0,1,3],
+      [1,3]
+    ]
+    
+    this.Update()
+    
+
+  }
+}
+
+class Strip extends Shape {
+  constructor(x_center, y_center) {
+    super(x_center, y_center);
+    this.no_of_squares = 4;
+    this.no_of_rotations = 4;
+    this.rotation_no = 1;
+    this.colour = "Aqua"
+    this.x = [
+      [0.5,0.5,0.5,0.5],
+      [-1.5,-0.5,0.5,1.5],
+      [-0.5,-0.5,-0.5,-0.5],
+      [-1.5,-0.5,0.5,1.5]
+    ]
+
+    this.y = [
+      [-1.5,-0.5,0.5,1.5],
+      [0.5,0.5,0.5,0.5],
+      [-1.5,-0.5,0.5,1.5],
+      [-0.5,-0.5,-0.5,-0.5]
+    ]
+
+    this.lower_blocks_nos = [
+      [3],
+      [0,1,2,3],
+      [3],
+      [0,1,2,3]
+    ]
+    
+    this.Update()
+    
+
+  }
 }
