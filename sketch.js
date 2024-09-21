@@ -28,28 +28,28 @@ function draw() {
 
   // Spawn new shape 
   if (newshape == 1) {
-    selector = floor(random(7))
+    selector = 6 //floor(random(7))
     switch (selector) {
       case 0:
-        shapes.push(new L(5, 2))
+        shapes.push(new L(4, 0))
         break;
       case 1:
-        shapes.push(new Mirror_L(5, 2))
+        shapes.push(new Mirror_L(4, 0))
         break;
       case 2:
-        shapes.push(new Tile(5.5, 2.5))
+        shapes.push(new Tile(4.5, 0.5))
         break;
       case 3:
-        shapes.push(new T(5, 2))
+        shapes.push(new T(4, 0))
         break;
       case 4:
-        shapes.push(new Z(5, 2))
+        shapes.push(new Z(4, 1))
         break;
       case 5:
-        shapes.push(new Mirror_Z(5, 2))
+        shapes.push(new Mirror_Z(4, 1))
         break;
       case 6:
-        shapes.push(new Strip(5.5, 2.5))
+        shapes.push(new Strip(4.5, -0.5))
         break;
     }
 
@@ -57,7 +57,7 @@ function draw() {
     newshape = 0
   }
 
-  // map places of shapes to the grid
+  // map places of shapes to the grid and show them
   for (const element of shapes) {
     element.Show()
     for (const block of element.blocks) {
@@ -70,7 +70,7 @@ function draw() {
   // move shape down & map new places of shapes to the grid
   if (frameCount % 50 == 0) {
 
-    shapes[count].MoveDown()
+    //shapes[count].MoveDown()
 
     
     grid = Array(rows).fill().map(() => Array(cols).fill(0));
@@ -118,11 +118,11 @@ function keyPressed() {
   switch (keyCode) {
     case LEFT_ARROW:
 
-      shapes[count].MoveLeft()
+      shapes[count].MoveLeft(grid)
       break;
     case RIGHT_ARROW:
 
-      shapes[count].MoveRight()
+      shapes[count].MoveRight(grid)
       break;
     case 82:  // R letter
 

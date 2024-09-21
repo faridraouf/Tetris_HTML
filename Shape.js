@@ -19,25 +19,47 @@ class Shape {
     
     this.x_center = x_center ;
     this.y_center = y_center ;
+
     this.colour;
     this.no_of_squares
+
     this.x = []
     this.y = []
-    this.rotation_no = 0
+    
     this.blocks = []
-    this.lower_blocks = []
+    
+    this.rotation_no = 0
     this.no_of_rotations
 
+    this.lower_blocks = []
     this.lower_blocks_nos = []
+
+    this.right_blocks = []
+    this.right_blocks_nos = []
+
+    this.left_blocks = []
+    this.left_blocks_nos = []
+
   }
   Update(){
+
     this.lower_blocks = []
+    this.right_blocks = []
+    this.left_blocks = []
+
     for (let i = 0 ; i < this.no_of_squares ; i++){
       this.blocks[i] = new Block(this.x_center + (this.x[this.rotation_no][i]), this.y_center + (this.y[this.rotation_no][i] ) , this.colour)
     }
     for (let i = 0 ; i < this.lower_blocks_nos[this.rotation_no].length ; i++){
       this.lower_blocks.push( this.blocks[this.lower_blocks_nos[this.rotation_no][i]])
     }
+    for (let i = 0 ; i < this.left_blocks_nos[this.rotation_no].length ; i++){
+      this.left_blocks.push( this.blocks[this.left_blocks_nos[this.rotation_no][i]])
+    }
+    for (let i = 0 ; i < this.right_blocks_nos[this.rotation_no].length ; i++){
+      this.right_blocks.push( this.blocks[this.right_blocks_nos[this.rotation_no][i]])
+    }
+
   }
   Show() {
     
@@ -59,10 +81,10 @@ class Shape {
     this.Update()
   }
 
-  MoveLeft() {
+  MoveLeft(grid) {
     
-      for (const block of this.blocks) {
-        if(block.x_pos == 0){
+      for (const block of this.left_blocks) {
+        if(block.x_pos == 0 || grid[block.y_pos][block.x_pos - 1] == 1){
           return;
         }
       }
@@ -71,9 +93,10 @@ class Shape {
     this.Update()
   }
 
-  MoveRight() {
-    for (const block of this.blocks) {
-      if(block.x_pos == 9){
+  MoveRight(grid) {
+    for (const block of this.right_blocks) {
+      
+      if(block.x_pos == 9 || grid[block.y_pos][block.x_pos + 1] == 1){
         return;
       }
     }
@@ -87,12 +110,14 @@ class Shape {
     this.Update()
     for (const block of this.blocks) {
       if(block.x_pos > 9){
-        this.x_center -=  1
-        break;
+        this.x_center -=  block.x_pos-9
       }
       else if(block.x_pos < 0){
-        this.x_center += 1
-        break;
+        this.x_center -= block.x_pos
+      }
+
+      if(block.y_pos < 0){
+        this.y_center += 0-block.y_pos
       }
     }
     
@@ -134,7 +159,7 @@ class L extends Shape {
     super(x_center, y_center);
     this.no_of_squares = 4;
     this.no_of_rotations = 4;
-    this.rotation_no = 3;
+    this.rotation_no = 1;
     this.colour = "DarkOrange"
     this.x = [
       [0,0,0,1],
@@ -155,6 +180,20 @@ class L extends Shape {
       [0,2,3],
       [0,3],
       [0,1,2]
+    ]
+
+    this.left_blocks_nos = [
+      [0,1,2],
+      [0,1],
+      [0,2,3],
+      [0,3]
+    ]
+
+    this.right_blocks_nos = [
+      [0,1,3],
+      [0,3],
+      [1,2,3],
+      [2,3]
     ]
     
     this.Update()
@@ -189,6 +228,20 @@ class Mirror_L extends Shape {
       [1,2,3],
       [0,3],
       [0,1,3]
+    ]
+
+    this.left_blocks_nos = [
+      [0,1,3],
+      [0,1],
+      [1,2,3],
+      [0,3]
+    ]
+
+    this.right_blocks_nos = [
+      [0,1,2],
+      [0,3],
+      [0,2,3],
+      [2,3]
     ]
     
     this.Update()
@@ -225,6 +278,20 @@ class T extends Shape {
       [0,3]
     ]
     
+    this.left_blocks_nos = [
+      [0,1],
+      [1,2,3],
+      [0,1],
+      [0,1,3]
+    ]
+
+    this.right_blocks_nos = [
+      [0,3],
+      [0,1,3],
+      [0,3],
+      [1,2,3]
+    ]
+
     this.Update()
     
 
@@ -252,6 +319,15 @@ class T extends Shape {
         
       ]
       
+      this.left_blocks_nos = [
+        [0,2],
+      
+      ]
+  
+      this.right_blocks_nos = [
+        [1,3],
+      
+      ]
   
       this.Update()
   
@@ -290,6 +366,20 @@ class Z extends Shape {
       [1,3]
     ]
     
+    this.left_blocks_nos = [
+      [0,2],
+      [0,2,3],
+      [0,2],
+      [0,2,3]
+    ]
+
+    this.right_blocks_nos = [
+      [1,3],
+      [0,1,3],
+      [1,3],
+      [0,1,3]
+    ]
+
     this.Update()
     
 
@@ -323,6 +413,20 @@ class Mirror_Z extends Shape {
       [1,3]
     ]
     
+    this.left_blocks_nos = [
+      [0,2],
+      [0,1,3],
+      [0,2],
+      [0,1,3]
+    ]
+
+    this.right_blocks_nos = [
+      [1,3],
+      [0,2,3],
+      [1,3],
+      [0,2,3]
+    ]
+
     this.Update()
     
 
@@ -355,6 +459,21 @@ class Strip extends Shape {
       [0,1,2,3],
       [3],
       [0,1,2,3]
+    ]
+
+    this.left_blocks_nos = [
+      [0,1,2,3],
+      [0],
+      [0,1,2,3],
+      [0]
+      
+    ]
+
+    this.right_blocks_nos = [
+      [0,1,2,3],
+      [3],
+      [0,1,2,3],
+      [3]
     ]
     
     this.Update()
