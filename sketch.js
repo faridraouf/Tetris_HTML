@@ -9,10 +9,9 @@ function setup() {
   shapes = []
   newshape = 1
   count = -1
-  //frameRate(1)
   row_num = 0
   block_width = 30
-
+  currentfr = 0
 
 }
 
@@ -26,33 +25,12 @@ function draw() {
     line((i * block_width), 0, (i * block_width), block_width * rows)
   }
 
+
+
   // Spawn new shape 
   if (newshape == 1) {
-    selector = 6 //floor(random(7))
-    switch (selector) {
-      case 0:
-        shapes.push(new L(4, 0))
-        break;
-      case 1:
-        shapes.push(new Mirror_L(4, 0))
-        break;
-      case 2:
-        shapes.push(new Tile(4.5, 0.5))
-        break;
-      case 3:
-        shapes.push(new T(4, 0))
-        break;
-      case 4:
-        shapes.push(new Z(4, 1))
-        break;
-      case 5:
-        shapes.push(new Mirror_Z(4, 1))
-        break;
-      case 6:
-        shapes.push(new Strip(4.5, -0.5))
-        break;
-    }
 
+    shapes = NewShape(shapes)
     count += 1
     newshape = 0
   }
@@ -70,9 +48,13 @@ function draw() {
   // move shape down & map new places of shapes to the grid
   if (frameCount % 50 == 0) {
 
-    //shapes[count].MoveDown()
+    if (frameCount != currentfr + 50) {
+      shapes[count].MoveDown(grid)
+    }
 
-    
+
+
+
     grid = Array(rows).fill().map(() => Array(cols).fill(0));
     for (const element of shapes) {
       element.Show()
@@ -80,31 +62,26 @@ function draw() {
         grid[block.y_pos][block.x_pos] = 1
       }
     }
+
+    if (shapes[count].ReachedBottom(grid)) {
+      if (frameCount == currentfr + 50) {
+        newshape = 1
+      }
+
+      currentfr = frameCount
+
+      shapes = EraseCompleteLines(shapes, complete_lines)
+
+    }
+
   }
 
-    // get complete lines
-    complete_lines = CheckGrid(grid)
+  // get complete lines
+  complete_lines = CheckGrid(grid)
 
   // stop shape and erase complete lines 
-  if (shapes[count].ReachedBottom(grid)) {
-    
-    newshape = 1
-    for (let i = shapes.length - 1; i >= 0; i--) {
-      for (const line of complete_lines) {
-        for (let j = shapes[i].blocks.length - 1; j >= 0; j--) {
 
 
-          if (shapes[i].blocks[j].y_pos == line) {
-            shapes[i].blocks.splice(j, 1)
-          }
-          else if (shapes[i].blocks[j].y_pos < line) {
-            shapes[i].blocks[j].y_pos += 1
-          }
-
-        }
-      }
-    }
-  }
 
 
 }
@@ -132,7 +109,7 @@ function keyPressed() {
     case DOWN_ARROW:
 
       if (shapes[count].blocks) {
-        shapes[count].MoveDown()
+        shapes[count].MoveDown(grid)
       }
 
 
@@ -145,8 +122,6 @@ function keyPressed() {
 
 }
 
-
-
 function CheckGrid(grid) {
   ones_array = Array(10).fill(1).toString()
   returned_array = []
@@ -157,5 +132,54 @@ function CheckGrid(grid) {
     }
   }
   return returned_array;
+}
+
+function NewShape(shapes) {
+  selector = floor(random(7))
+  switch (selector) {
+    case 0:
+      shapes.push(new L(4, 0))
+      break;
+    case 1:
+      shapes.push(new Mirror_L(4, 0))
+      break;
+    case 2:
+      shapes.push(new Tile(4.5, 0.5))
+      break;
+    case 3:
+      shapes.push(new T(4, 0))
+      break;
+    case 4:
+      shapes.push(new Z(4, 1))
+      break;
+    case 5:
+      shapes.push(new Mirror_Z(4, 1))
+      break;
+    case 6:
+      shapes.push(new Strip(4.5, -0.5))
+      break;
+  }
+  return shapes;
+}
+
+function EraseCompleteLines(shapes, complete_lines) {
+
+  for (let i = shapes.length - 1; i >= 0; i--) {
+    for (const line of complete_lines) {
+      for (let j = shapes[i].blocks.length - 1; j >= 0; j--) {
+
+
+        if (shapes[i].blocks[j].y_pos == line) {
+          shapes[i].blocks.splice(j, 1)
+        }
+        else if (shapes[i].blocks[j].y_pos < line) {
+          shapes[i].blocks[j].y_pos += 1
+        }
+
+      }
+    }
+  }
+  return shapes;
+
 }
 

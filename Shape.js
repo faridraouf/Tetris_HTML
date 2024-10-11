@@ -76,9 +76,15 @@ class Shape {
   MoveUp() {
     this.y_center -= 1
   }
-  MoveDown() {
-    this.y_center += 1
-    this.Update()
+  MoveDown(grid) {
+    if (this.ReachedBottom(grid)){
+
+    }
+    else{
+      this.y_center += 1
+      this.Update()
+    }
+
   }
 
   MoveLeft(grid) {
