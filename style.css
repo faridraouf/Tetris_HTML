@@ -6,3 +6,27 @@ html, body {
 canvas {
   display: block;
 }
+
+
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 40px 400px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+  color: black;
+  border: 2px solid #04AA6D;
+}
+   
+.button:hover {
+  background-color: #04AA6D;
+  color: white;
+}
