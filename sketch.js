@@ -1,8 +1,19 @@
+// Get the button element
+const button = document.getElementById('startbutton');
+
+// Add a click event listener to the button
+button.addEventListener('click', Start);
+
+function Start(){
+  start = !start
+}
+
+
 function setup() {
   let cnv = createCanvas(500, 700);
   background(220)
   cnv.position(20, 20);
-
+  cnv.
   frameCount;
   rows = 20
   cols = 10
@@ -12,10 +23,15 @@ function setup() {
   row_num = 0
   block_width = 30
   currentfr = 0
-
+  start = false
 }
 
+
 function draw() {
+
+ if (start) {
+
+        
 
   grid = Array(rows).fill().map(() => Array(cols).fill(0));
 
@@ -82,7 +98,7 @@ function draw() {
   // stop shape and erase complete lines 
 
 
-
+ }
 
 }
 
