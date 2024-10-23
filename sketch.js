@@ -41,7 +41,13 @@ function draw() {
     line((i * block_width), 0, (i * block_width), block_width * rows)
   }
 
-
+ // map places of shapes to the grid and show them
+ for (const element of shapes) {
+  element.Show()
+  for (const block of element.blocks) {
+    grid[block.y_pos][block.x_pos] = 1
+  }
+}
 
   // Spawn new shape 
   if (newshape == 1) {
@@ -49,7 +55,17 @@ function draw() {
     shapes = NewShape(shapes)
     count += 1
     newshape = 0
+    if (isGameOver(grid,shapes[count])) {
+
+      // End game
+      alert("Game Over!!")
+      noLoop()
+  
+   }
   }
+
+ 
+
 
   // map places of shapes to the grid and show them
   for (const element of shapes) {
@@ -58,8 +74,6 @@ function draw() {
       grid[block.y_pos][block.x_pos] = 1
     }
   }
-
-
 
   // move shape down & map new places of shapes to the grid
   if (frameCount % 50 == 0) {
@@ -104,7 +118,17 @@ function draw() {
 
 
 
+function isGameOver(grid,shape){
 
+  for (const block of shape.blocks){
+    if  (grid[block.y_pos][block.x_pos] == 1){
+      console.log("end")
+      return true
+    }
+  }
+  return false
+
+}
 
 function keyPressed() {
 
